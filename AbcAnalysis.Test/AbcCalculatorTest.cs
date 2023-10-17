@@ -28,7 +28,7 @@ namespace AbcAnalysis.Test
 
             Assert.IsTrue(statisticsService.AbcTableQtySku.All(x => x.A == parameters.QtySkuA), "Количество SKU класса А не совпадает с заданным");
             Assert.IsTrue(statisticsService.AbcTableQtySku.All(x => x.B == parameters.QtySkuB), "Количество SKU класса В не совпадает с заданным");
-            Assert.IsTrue(averagePercentTotalOrders >= 0.90, "Средний процент заказов: {0}", averagePercentTotalOrders);
+            Assert.IsTrue(averagePercentTotalOrders >= 0.90, "Средний процент заказов: {0:P2}", averagePercentTotalOrders);
             Assert.IsTrue(sumAbcDirectionChanges <= 210, "Сумма изменений АВС: {0}", sumAbcDirectionChanges);
         }
     }
