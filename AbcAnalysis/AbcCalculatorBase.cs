@@ -37,19 +37,19 @@ namespace AbcAnalysis
         public CalculationPeriods CurrentCalculationPeriods { get; private set; }
 
         /// <summary>
-        /// Количество SKU класса А
+        /// Целевое количество SKU класса А, в таблице ABC
         /// </summary>
         protected int QtySkuA { get; }
 
         /// <summary>
-        /// Количество SKU класса В
+        /// Целевое количество SKU класса В, в таблице ABC
         /// </summary>
         protected int QtySkuB { get; }
 
         /// <summary>
-        /// Количество SKU класса А + В
+        /// Целевое количество SKU классов А и В, в таблице ABC
         /// </summary>
-        protected int QtySkuAB => QtySkuA + QtySkuB;
+        protected int QtySkuAB { get; }
 
         public event Action<IEnumerable<AbcTableItem>>? AbcTableCalculationCompleted;
 
@@ -57,6 +57,7 @@ namespace AbcAnalysis
         {
             QtySkuA = parameters.QtySkuA;
             QtySkuB = parameters.QtySkuB;
+            QtySkuAB = QtySkuA + QtySkuB;
             Orders = orders;
 
             DateTime initialDate = orders.Min(x => x.Date);
@@ -91,7 +92,7 @@ namespace AbcAnalysis
             IReadOnlyList<AbcTableItem> abcTable = CalculateFirstAbcTable(Iterations[0].AbcTable);
             IReadOnlyList<AbcTableItem> previousAbcTable = abcTable;
 
-            foreach (var periods in Iterations.Skip(1))
+            foreach (CalculationPeriods periods in Iterations.Skip(1))
             {
                 CurrentIteration++;
                 CurrentCalculationPeriods = periods;
@@ -99,7 +100,7 @@ namespace AbcAnalysis
 
                 CalculateAbcTable(abcTable);
 
-                foreach (var item in abcTable)
+                foreach (AbcTableItem item in abcTable)
                 {
                     SetCurrentAbcInMatrix(item.Sku, item.Abc);
                 }
@@ -170,7 +171,7 @@ namespace AbcAnalysis
         /// </summary>
         private void SetAbcX(IEnumerable<AbcTableItem> previousAbcTable)
         {
-            foreach (var item in previousAbcTable)
+            foreach (AbcTableItem item in previousAbcTable)
             {
                 if (AbcMatrix[item.Sku][CurrentIteration] == Abc.NA)
                 {
@@ -178,7 +179,7 @@ namespace AbcAnalysis
                 }
             }
 
-            foreach (var item in AbcMatrix.Values)
+            foreach (Abc[] item in AbcMatrix.Values)
             {
                 if (item[PreviousIteration] == Abc.X && item[CurrentIteration] == Abc.NA)
                 {

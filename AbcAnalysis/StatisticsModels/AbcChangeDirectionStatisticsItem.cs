@@ -2,6 +2,10 @@
 
 namespace AbcAnalysis.StatisticsModels
 {
+    /// <summary>
+    /// Представляет количество SKU, поменявших свой класс
+    /// <para>например из A в B, 30 SKU</para>
+    /// </summary>
     public readonly struct AbcChangeDirectionStatisticsItem
     {
         /// <summary>
@@ -10,7 +14,7 @@ namespace AbcAnalysis.StatisticsModels
         public AbcChangeDirection Direction { get; }
 
         /// <summary>
-        /// Количество Sku
+        /// Количество SKU
         /// </summary>
         public int QtySku { get; }
 

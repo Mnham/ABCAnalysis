@@ -26,7 +26,7 @@ namespace AbcAnalysis
                 Сумма изменений АВС: {statisticsService.AbcDirectionChanges.Sum(x => x.AB + x.AC + x.AX + x.BA + x.BC + x.BX)}
                 """);
 
-            FileInfo reportFile = statisticsService.CreateExcelReport();
+            FileInfo reportFile = statisticsService.CreateExcelReport(AppDomain.CurrentDomain.BaseDirectory);
             ShowExcelReport(reportFile);
         }
 

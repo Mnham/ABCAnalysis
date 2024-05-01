@@ -14,47 +14,47 @@ namespace AbcAnalysis
         /// <summary>
         /// Изменения классов АВС
         /// </summary>
-        public List<AbcChangeDirectionStatistics> AbcDirectionChanges { get; } = new();
+        public List<AbcChangeDirectionStatistics> AbcDirectionChanges { get; } = [];
 
         /// <summary>
         /// Количество SKU в таблице АВС по классам
         /// </summary>
-        public List<AbcStatistics> AbcTableQtySku { get; } = new();
+        public List<AbcStatistics> AbcTableQtySku { get; } = [];
 
         /// <summary>
         /// Количество заказов в таблице АВС по классам
         /// </summary>
-        public List<AbcStatistics> AbcTableTotalOrders { get; } = new();
+        public List<AbcStatistics> AbcTableTotalOrders { get; } = [];
 
         /// <summary>
         /// Процент SKU в таблице АВС по классам
         /// </summary>
-        public List<AbcStatistics> AbcTablePercentQtySku { get; } = new();
+        public List<AbcStatistics> AbcTablePercentQtySku { get; } = [];
 
         /// <summary>
         /// Процент заказов в таблице АВС по классам
         /// </summary>
-        public List<AbcStatistics> AbcTablePercentTotalOrders { get; } = new();
+        public List<AbcStatistics> AbcTablePercentTotalOrders { get; } = [];
 
         /// <summary>
         /// Количество заказанных SKU
         /// </summary>
-        public List<AbcStatistics> QtySkuInOrders { get; } = new();
+        public List<AbcStatistics> QtySkuInOrders { get; } = [];
 
         /// <summary>
         /// Количество заказов
         /// </summary>
-        public List<AbcStatistics> TotalOrders { get; } = new();
+        public List<AbcStatistics> TotalOrders { get; } = [];
 
         /// <summary>
         /// Процент заказанных SKU
         /// </summary>
-        public List<AbcStatistics> PercentQtySkuInOrders { get; } = new();
+        public List<AbcStatistics> PercentQtySkuInOrders { get; } = [];
 
         /// <summary>
         /// Процент заказов
         /// </summary>
-        public List<AbcStatistics> PercentTotalOrders { get; } = new();
+        public List<AbcStatistics> PercentTotalOrders { get; } = [];
 
         public AbcStatisticsService(AbcCalculatorBase abcCalculator)
         {
@@ -62,9 +62,9 @@ namespace AbcAnalysis
             abcCalculator.AbcTableCalculationCompleted += RecordStatistics;
         }
 
-        public FileInfo CreateExcelReport()
+        public FileInfo CreateExcelReport(string directory)
         {
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Статистика_{DateTime.Now:fffffff}.xlsx");
+            string path = Path.Combine(directory, $"Статистика_{DateTime.Now:fffffff}.xlsx");
             FileInfo file = new(path);
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -96,11 +96,11 @@ namespace AbcAnalysis
             }
 
             int row = 2;
-            foreach (var item in _abcCalculator.AbcMatrix)
+            foreach (KeyValuePair<int, Abc[]> item in _abcCalculator.AbcMatrix)
             {
                 int column = 2;
                 wrksheet.SetValue(row, 1, item.Key);
-                foreach (var abc in item.Value)
+                foreach (Abc abc in item.Value)
                 {
                     wrksheet.SetValue(row, column++, abc);
                 }
@@ -163,7 +163,7 @@ namespace AbcAnalysis
                            select new { g.Key, TotalOrders = g.Sum(x => x.Orders) }
                  group x by x.Key.Abc into g
                  select new AbcStatisticsItem(g.Key, g.Count(), g.Sum(x => x.TotalOrders)))
-                 .ToArray();
+                    .ToArray();
 
             QtySkuInOrders.Add(new AbcStatistics(endStatistics, ordersStatistics, x => x.QtySku, StatisticsType.Value));
             TotalOrders.Add(new AbcStatistics(endStatistics, ordersStatistics, x => x.TotalOrders, StatisticsType.Value));

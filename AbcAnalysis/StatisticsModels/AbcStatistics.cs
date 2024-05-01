@@ -3,6 +3,9 @@ using AbcAnalysis.Models;
 
 namespace AbcAnalysis.StatisticsModels
 {
+    /// <summary>
+    /// Аггрегирует статистику по классам ABC, в количественном или в процентном соотношении, по количеству SKU или по количеству заказов
+    /// </summary>
     public readonly struct AbcStatistics
     {
         [Description("Дата")]

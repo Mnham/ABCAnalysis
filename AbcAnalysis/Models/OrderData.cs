@@ -1,5 +1,8 @@
 ﻿namespace AbcAnalysis.Models
 {
+    /// <summary>
+    /// Исходные данные по заказам SKU
+    /// </summary>
     public sealed class OrderData
     {
         /// <summary>

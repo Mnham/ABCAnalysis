@@ -2,6 +2,7 @@
 {
     /// <summary>
     /// Направление изменения класса АВС
+    /// <para>отображает, в каком направлении SKU поменял свой класс, при сравнении двух таблиц ABC</para>
     /// </summary>
     public enum AbcChangeDirection : byte
     {

@@ -2,6 +2,9 @@
 
 namespace AbcAnalysis.StatisticsModels
 {
+    /// <summary>
+    /// Статистика по классу ABC
+    /// </summary>
     public readonly struct AbcStatisticsItem
     {
         /// <summary>
@@ -10,7 +13,7 @@ namespace AbcAnalysis.StatisticsModels
         public Abc Abc { get; }
 
         /// <summary>
-        /// Количество Sku
+        /// Количество SKU
         /// </summary>
         public int QtySku { get; }
 

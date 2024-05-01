@@ -1,5 +1,8 @@
 ﻿namespace AbcAnalysis.Models
 {
+    /// <summary>
+    /// Данные по SKU, в таблице АВС
+    /// </summary>
     public sealed class AbcTableItem
     {
         /// <summary>
@@ -17,10 +20,10 @@
         /// </summary>
         public Abc Abc { get; set; }
 
-        public AbcTableItem(int sku, int totalOrdersCount)
+        public AbcTableItem(int sku, int totalOrders)
         {
             Sku = sku;
-            TotalOrders = totalOrdersCount;
+            TotalOrders = totalOrders;
         }
     }
 }

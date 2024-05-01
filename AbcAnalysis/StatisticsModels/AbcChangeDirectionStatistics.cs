@@ -3,7 +3,8 @@
 namespace AbcAnalysis.StatisticsModels
 {
     /// <summary>
-    /// Статистика изменений классов АВС
+    /// Аггрегирует статистику по изменению классов АВС, отображает количество SKU, поменявших свой класс
+    /// <para>например AB = 30, значит, что 30 SKU поменяли свой класс из A в B</para>
     /// </summary>
     public readonly struct AbcChangeDirectionStatistics
     {
